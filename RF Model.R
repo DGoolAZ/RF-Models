@@ -9,7 +9,7 @@ library(dplyr)        # For data manipulation
 library(data.table)   # For efficient data handling
 
 # Step 1: Read and Clean Presence Data -----------------------------------------
-presence_data <- fread("F:\\Modeling\\CECI Update\\Presance\\PresMain_CECI.csv")
+presence_data <- fread("F:\\Modeling\\CECI Update\\Presance\\Pima_Presaince.csv")
 
 # Inspect the data
 head(presence_data)
@@ -23,8 +23,15 @@ longitude_col <- "longitude"
 presence_data_clean <- presence_data[, .(latitude = get(latitude_col), longitude = get(longitude_col))]
 presence_data_clean <- na.omit(presence_data_clean)
 
+# Randomly remove 50% of the presence data
+set.seed(123)  # Ensure reproducibility
+presence_data_clean <- presence_data_clean[sample(.N, .N / 2)]
+
 # Convert to sf object
 presence_data_sf <- st_as_sf(presence_data_clean, coords = c("longitude", "latitude"), crs = 4326)
+
+# Check the sf object
+print(presence_data_sf)
 
 # Step 2: Read in Raster Data --------------------------------------------------
 # Step 2: Read in Raster Data --------------------------------------------------
