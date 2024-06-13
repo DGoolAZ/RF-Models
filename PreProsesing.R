@@ -27,7 +27,7 @@ for (file in tif_files) {
   
   # Reproject the raster to WGS 1984 if it's not already
   if (!compareCRS(r, CRS(wgs84_crs))) {
-    r <- projectRaster(r, crs = wgs84_crs)
+    r <- projectRaster(r, crs = wgs84_crs) 
   }
   
   # Clip and resample the raster to match the DEM
